@@ -1,4 +1,3 @@
-
 //@HEADER
 // ***************************************************
 //
@@ -153,7 +152,9 @@ HPCG_Init(int * argc_p, char ** *argv_p, HPCG_Params & params) {
       1900 + ptm->tm_year, ptm->tm_mon+1, ptm->tm_mday, ptm->tm_hour, ptm->tm_min, ptm->tm_sec );
 
   if (0 == params.comm_rank) {
-    HPCG_fout.open(fname);
+    HPCG_fout.copyfmt(std::cout);
+    HPCG_fout.clear(std::cout.rdstate());
+    HPCG_fout.basic_ios<char>::rdbuf(std::cout.rdbuf());
   } else {
 #if defined(HPCG_DEBUG) || defined(HPCG_DETAILED_DEBUG)
     sprintf( fname, "hpcg%04d%02d%02dT%02d%02d%02d_%d.txt",
